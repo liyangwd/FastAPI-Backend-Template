@@ -1,4 +1,5 @@
 import fastapi
+from fastapi import HTTPException
 
 from src.api.dependencies.repository import get_repository
 from src.models.schemas.account import AccountInCreate, AccountInLogin, AccountInResponse, AccountWithToken
@@ -9,6 +10,8 @@ from src.utilities.exceptions.http.exc_400 import (
     http_exc_400_credentials_bad_signin_request,
     http_exc_400_credentials_bad_signup_request,
 )
+from src.utilities.messages.exceptions.http.exc_details import \
+    http_400_signup_credentials_details
 
 router = fastapi.APIRouter(prefix="/auth", tags=["authentication"])
 
