@@ -1,10 +1,11 @@
 import fastapi
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-
 from src.api.endpoints import router as api_endpoint_router
-from src.config.events import execute_backend_server_event_handler, terminate_backend_server_event_handler
+from src.config.events import execute_backend_server_event_handler
+from src.config.events import terminate_backend_server_event_handler
 from src.config.manager import settings
+from src.middleware.request_id_middleware import RequestIDMiddleware
 
 
 def initialize_backend_application() -> fastapi.FastAPI:
@@ -17,6 +18,7 @@ def initialize_backend_application() -> fastapi.FastAPI:
         allow_methods=settings.ALLOWED_METHODS,
         allow_headers=settings.ALLOWED_HEADERS,
     )
+    app.add_middleware(RequestIDMiddleware)
 
     app.add_event_handler(
         "startup",
