@@ -10,5 +10,5 @@ RUN poetry install --no-dev
 TODO
 precommit  done
 celery
-requestid
+requestid  done
 日志格式统一

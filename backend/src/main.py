@@ -9,8 +9,7 @@ from src.middleware.request_id_middleware import RequestIDMiddleware
 
 
 def initialize_backend_application() -> fastapi.FastAPI:
-    app = fastapi.FastAPI(**settings.set_backend_app_attributes)  # type: ignore
-
+    app = fastapi.FastAPI(**settings.set_backend_app_attributes)  # noqa
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.ALLOWED_ORIGINS,
@@ -19,6 +18,7 @@ def initialize_backend_application() -> fastapi.FastAPI:
         allow_headers=settings.ALLOWED_HEADERS,
     )
     app.add_middleware(RequestIDMiddleware)
+    settings.configure_logging()
 
     app.add_event_handler(
         "startup",
