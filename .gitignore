@@ -92,7 +92,6 @@ prod.env
 
 # Flutter
 *.class
-*.lock
 *.log
 *.pyc
 *.swp
