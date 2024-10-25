@@ -90,16 +90,6 @@ prod.env
 .env.test.local
 .env.production.local
 
-# Flutter
-*.class
-*.log
-*.pyc
-*.swp
-.atom/
-.buildlog/
-.history
-.svn/
-
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -124,19 +114,6 @@ instance/
 *.manifest
 *.spec
 
-# Rust compiled file
-target/
-
-# SageMath (Python#s open-source mathematics framework)
-*.sage.py
-
-# Scraping tool
-.scrapy
-
-# Translations:
-*.mo
-*.pot
-
 # Tests and coverage reports:
 htmlcov/
 .tox/
@@ -157,7 +134,3 @@ cov.html
 venv/
 venv.bak/
 node_modules/
-
-# Yarn
-.yarn/*
-!.yarn/releases
