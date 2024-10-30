@@ -23,33 +23,8 @@ This backend application template consists of:
 
 **INFO**: All related to Python will be setup **IN** and **FROM** the `backend/` directory!
 
-* Step 1 $\rightarrow$ Open your project root directory and set up your Python via `PyEnv`:
 
-    ```shell
-    pyenv install 3.11.0
-    ```
-
-* Step 2 $\rightarrow$ Create our virtual environment:
-
-    ```shell
-    pyenv virtualenv 3.11.0 YOUR_VENV_NAME
-    ```
-
-* Step 3 $\rightarrow$ Set the newly created virtual environment as your main Python interpreter in the root directory:
-
-    ```shell
-    pyenv local YOUR_VENV_NAME
-    ```
-
-* Step 4 $\rightarrow$ Install the initial project requirements with `pip3`:
-
-    ```shell
-    pip3 install -r requirements.txt
-    ```
-
----
-
-## SSHhhhttt 🤫 It's a Secret!
+## It's a Secret!
 
 All secret variables are configured in the `.env`, but in this case since it is listed in our `.gitignore` you should create one and save it in the root directory.
 
@@ -92,35 +67,6 @@ The secret variables are accessed by 2 different files:
     ```shell
     alembic upgrade head
     ```
-
----
-
-## Pre-Commit
-
-**INFO**: Run **Step 1** every time you `git add` a file to identify any mistakes before `git commit`. Otherwise, you will re-write your perfect commit message again 👿🤬🤮
-
-* Step 1 $\rightarrow$ Install the pre-commit hook:
-    ```shell
-    pre-commit
-    ```
-
-* Step 2 $\rightarrow$ For good practive, let#s update the hooks:
-    ```shell
-    pre-commit autoupdate
-    ```
-
----
-
-## TOML Configuration
-
-Check the `pyproject.toml` as the main configuration file for the following packages:
-
-* Project documentation
-* Black
-* Isort
-* MyPy
-* PyTest
-* Converage
 
 ---
 

@@ -7,12 +7,10 @@ RUN poetry install --no-dev
 
 
 
-TODO
 precommit  done
 celery
 requestid  done
 日志格式统一 done
-不必要的配置和文件做一些删减
 编写完整的 README
 
 

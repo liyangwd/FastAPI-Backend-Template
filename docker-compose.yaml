@@ -15,24 +15,7 @@ services:
     expose:
       - 5432
     ports:
-      - 5433:5432
-
-  db_editor:
-    image: adminer
-    container_name: db_editor
-    restart: always
-    environment:
-      - POSTGRES_USER=${POSTGRES_USERNAME}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_DB=${POSTGRES_DB}
-    expose:
-      - 8080
-    ports:
-      - 8081:8080
-    depends_on:
-      - db
+      - "5433:5432"
 
   backend_app:
     container_name: backend_app
@@ -44,7 +27,7 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
       - DEBUG=${DEBUG}
       - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_HOST=db
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_SCHEMA=${POSTGRES_SCHEMA}
@@ -72,12 +55,13 @@ services:
       - HASHING_ALGORITHM_LAYER_1=${HASHING_ALGORITHM_LAYER_1}
       - HASHING_ALGORITHM_LAYER_2=${HASHING_ALGORITHM_LAYER_2}
       - HASHING_SALT=${HASHING_SALT}
+      - BACKEND_LOG_PATH=/var/log/backend.log
     volumes:
       - ./backend/:/usr/backend/
     expose:
       - 8000
     ports:
-      - 8001:8000
+      - "8001:8000"
     depends_on:
       - db
 
