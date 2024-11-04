@@ -2,16 +2,14 @@ import asyncio
 from logging.config import fileConfig
 
 from alembic import context
-from sqlalchemy import engine_from_config
-from sqlalchemy.engine import Connection
-from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlalchemy.pool import NullPool as SQLAlchemyNullPool
-
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.pool import NullPool
 from src.repository.base import Base
 from src.repository.database import async_db
 
 config = context.config
-config.set_main_option(name="sqlalchemy.url", value=str(async_db.set_async_db_uri))
+database_url = async_db.set_async_db_uri.replace("%", "%%")
+config.set_main_option(name="sqlalchemy.url", value=database_url)
 target_metadata = Base.metadata
 
 if config.config_file_name is not None:
@@ -19,17 +17,7 @@ if config.config_file_name is not None:
 
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
-
-    This configures the context with just a URL
-    and not an Engine, though an Engine is acceptable
-    here as well.  By skipping the Engine creation
-    we don't even need a DBAPI to be available.
-
-    Calls to context.execute() here emit the given string to the
-    script output.
-
-    """
+    """Run migrations in 'offline' mode."""
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
@@ -42,7 +30,7 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
-def do_run_migrations(connection: Connection) -> None:
+def do_run_migrations(connection) -> None:
     context.configure(connection=connection, target_metadata=target_metadata)
 
     with context.begin_transaction():
@@ -50,19 +38,11 @@ def do_run_migrations(connection: Connection) -> None:
 
 
 async def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-    connectable = AsyncEngine(
-        engine_from_config(
-            config.get_section(config.config_ini_section),  # type: ignore
-            prefix="sqlalchemy.",
-            poolclass=SQLAlchemyNullPool,
-            future=True,
-        )
+    """Run migrations in 'online' mode."""
+    connectable = create_async_engine(
+        config.get_main_option("sqlalchemy.url"),
+        poolclass=NullPool,
+        future=True,
     )
 
     async with connectable.connect() as connection:
